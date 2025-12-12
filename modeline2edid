@@ -37,9 +37,12 @@ def template_S(tokens):
     if not name:
         print("Could not parse modeline:", tokens, file=sys.stderr)
         return False
+    m = re.match(r'(.+_\d+)\.\d+$', name)
+    if m:
+        name = m.group(1)        
     if len(name) > 12:
-        print(f"Name cannot be longer than 12 chars: {name} is {len(name)} long", file=sys.stderr)
-        return False
+        print(f"Warning: name '{name}' too long ({len(name)} chars). Shortening to 12 chars.")
+        name = name[:12]
     fn = f"{name}.S"
 
     # CLOCK
